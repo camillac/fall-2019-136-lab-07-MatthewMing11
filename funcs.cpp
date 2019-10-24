@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 int countChar(std::string line, char c){//counter function
    int total=0;
