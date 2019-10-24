@@ -6,7 +6,5 @@
 int main(int argc, char *argv[])
 {
   // your code here
-  std::cout<<"Testing ascii function from main:"<<std::endl;
-  ascii("Cat :3 Dog");
   return 0;
 }
