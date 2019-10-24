@@ -38,11 +38,12 @@ bool match(std::string line){
    }
 
 }
-int main(){//main function
+std::string indent(std::string file){//main function
    int ilevel=0;
    int left,right;
-   std::string input;
-   while(getline(std::cin,input)){
+   std::string input,result;
+   std::ifstream fin(file);
+   while(getline(fin,input)){
       left=countChar(input,'{');
       right=countChar(input,'}');
       if(right>left){
@@ -52,9 +53,9 @@ int main(){//main function
          ilevel-=right;
       }
       for(int i=0;i<ilevel;i++){
-         std::cout<<'\t';
+         result+='\t';
       }
-      std::cout<<removeLeadingSpaces(input)<<std::endl;
+      result+=removeLeadingSpaces(input)+"\n";
       if(left>right){
          ilevel+=(left-right);
       }
@@ -62,4 +63,6 @@ int main(){//main function
          ilevel+=left;
       }
    }
+   fin.close();
+   return result;
 }
