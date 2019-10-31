@@ -1,6 +1,4 @@
-# Code Review for Others
-
-## Code Review For Matthew Ming
+# Code Review From Xinyi lin
 
 * I personally don't recommend to use main.cpp as a test case. I think there should be an option for the user to enter a file ath in the main.cpp so user don't have to go through the hassel of changing the file path manually in the test.cpp, although not required by the instructions.
 * Logic is reasonable and easy to understand/follow since comments was provided
