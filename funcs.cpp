@@ -62,7 +62,8 @@ int indexOf(std::string line, std::string s){
 }
 
 std::string indent(std::string file){//main function
-  int ilevel=0; // num tabs
+  int ilevel = 0; // num tabs
+  int starComment = 0; // checks for */
   int left,right; // number of left braces, number of right braces
   std::string input,result;
   std::ifstream fin(file);
@@ -70,6 +71,37 @@ std::string indent(std::string file){//main function
 
     left = 0;
     right = 0;
+
+    // ------- QUOTES ("") --------
+
+    // subtracts the number of braces in between the first and second quotation mark ("{}")
+    int firstIndex = indexOf(input, "\"");
+    if (firstIndex >= 0){
+      left -= countChar(input.substr(firstIndex, indexOf(input.substr(firstIndex + 1), "\"") - firstIndex), '{');
+      right -= countChar(input.substr(firstIndex, indexOf(input.substr(firstIndex + 1), "\"") - firstIndex), '}');
+      // std::cout << countChar(input.substr(firstIndex, indexOf(input.substr(firstIndex + 1), "\"") - firstIndex), '}') << std::endl;
+      // std::cout << input.substr(indexOf(input, "\"") + 1) << std::endl;
+    }
+
+    // ------- STAR COMMENTS (/* AND */) --------
+    if (indexOf(input, "*/") >= 0){ // if there is */, ignore braces before end of comment and close starComment
+      starComment = 0;
+      left -= countChar(input.substr(0, indexOf(input, "/*")), '{');
+      right -= countChar(input.substr(0, indexOf(input, "/*")), '}');
+    }
+
+    if (starComment == 1){ // if star comment has not been closed, ignore all braces in line
+      left-=countChar(input,'{');
+      right-=countChar(input,'}');
+    }
+
+    else if (indexOf(input, "/*") >= 0){ // else if star comment begins on this line, ignore all braces after
+      starComment = 1;
+      left -= countChar(input.substr(indexOf(input, "/*")), '{');
+      right -= countChar(input.substr(indexOf(input, "/*")), '}');
+    }
+
+    // ------- COMMENTS (// AND //) --------
 
     if (indexOf(input, "//") >= 0){
       left -= countChar(input.substr(indexOf(input, "//")), '{');

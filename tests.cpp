@@ -7,7 +7,7 @@
 #include "funcs.h"
 
 TEST_CASE("Testing bad-code.cpp"){
-   CHECK(indent("bad-code.cpp")=="int main(){\n\t// Hi, I'm a program! {\n\tint x = 1; {}\n\tfor(int i = 0; i < 10; i++) {\n\t\tcout << i;\n\t\tcout << endl;\n\t}\n}\n");
+   CHECK(indent("bad-code.cpp")=="int main(){\n\t// Hi, I'm a program! {\n\tint x = 1;\n\tfor(int i = 0; i < 10; i++) { /* sdsdfsd {\n\t\t{*/\n\t\tcout << i;\n\t\tcout << \"hello}\";\n\t\tcout << endl;\n\t}\n}\n");
 }
 
 TEST_CASE("Testing main.cpp"){
